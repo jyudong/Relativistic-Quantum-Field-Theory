@@ -1,0 +1,251 @@
+% !TEX program = pdflatex
+% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error "%DOC%"
+% 作业模板
+\documentclass[UTF8,10pt,a4paper]{article}
+\usepackage[UTF8]{ctex}% 中文支持
+\usepackage{braket}% Q.M. 
+\usepackage{enumerate}
+\usepackage{slashed}
+% 将全角句号映射为全角句点，需xelatex编译
+% \catcode`\。=\active
+% \newcommand{。}{．}
+% 作业信息
+\newcommand{\CourseName}{相对论量子场论}
+\newcommand{\CourseCode}{PHYS2124}
+\newcommand{\Semester}{22-23学年第学期}
+\newcommand{\ProjectName}{作业四}
+\newcommand{\DueTimeType}{截止日期}
+\newcommand{\DueTime}{22.10.11}
+\newcommand{\StudentName}{董建宇}
+\newcommand{\StudentID}{2019511017}
+\usepackage[vmargin=1in,hmargin=.5in]{geometry}% 页边距
+\usepackage{fancyhdr}% 页眉和页脚
+\usepackage{lastpage}% 返回末页页码
+\usepackage{calc}% 返回文本宽度
+\pagestyle{fancy}% 全局页眉和页脚风格
+\fancyhf{}% 清除预设的页眉和页脚
+\fancyhead[L]{\CourseName}% 页眉左
+\fancyhead[C]{\ProjectName}% 页眉中
+\fancyhead[R]{\StudentName}% 页眉右
+\fancyfoot[R]{\thepage\ / \pageref{LastPage}}% 页脚右
+\setlength\headheight{12pt}% 页眉高
+\fancypagestyle{FirstPageStyle}{% 首页页眉和页脚风格
+    \fancyhf{}% 清除预设的页眉和页脚
+    \fancyhead[L]{\CourseName\\
+        \CourseCode\\
+        \Semester}% 页眉左
+    \fancyhead[C]{{\Huge\bfseries\ProjectName}\\
+        \DueTimeType\ : \DueTime}% 页眉中
+    \fancyhead[R]{姓名 : \makebox[\widthof{\StudentID}][s]{\StudentName}\\
+        学号 : \StudentID\\
+        成绩 : \underline{\makebox[\widthof{\StudentID}]{}}}% 页眉右
+    \fancyfoot[R]{\thepage\ / \pageref{LastPage}}% 页脚右
+    \setlength\headheight{36pt}% 页眉高
+}
+\usepackage{amsmath,amssymb,amsthm,bm}% 基础数学支持，特殊数学字符，自定义定理，公式内加粗
+\allowdisplaybreaks[4]% 公式跨页
+\newtheoremstyle{Problem}% 定理风格名称
+{}% 定理上方空间尺寸，留空为默认
+{}% 定理下方空间尺寸，留空为默认
+{}% 定理主体字体
+{}% 定理缩进量
+{\bfseries}% 定理开头字体
+{.}% 定理开头后所接标点
+{ }% 定理开头后所接空间尺寸，空格为默认词间距
+{第\thmnumber{ #2}\thmname{ #1}\thmnote{ (#3)} 得分: \underline{\qquad\qquad}}% 定理开头格式，留空为默认
+\theoremstyle{Problem}% 设定定理风格
+\newtheorem{prob}{题}% 题目
+\newtheoremstyle{Solution}% 定理风格名称
+{}% 定理上方空间尺寸，留空为默认
+{}% 定理下方空间尺寸，留空为默认
+{}% 定理主体文本字体
+{}% 定理缩进量
+{\bfseries}% 定理开头字体
+{:}% 定理开头后所接标点
+{ }% 定理开头后所接空间尺寸，空格为默认词间距
+{\thmname{#1}}% 定理开头格式
+\makeatletter
+\def\@endtheorem{\qed\endtrivlist\@endpefalse}% 题解后添加qed符号（黑色空心小正方形）
+\makeatother
+\theoremstyle{Solution}% 设定定理风格
+\newtheorem*{sol}{解}% 题解
+% \usepackage{mathrsfs}% 公式内花体字母 - \mathscr{}
+% \usepackage{esint}% 特殊积分号
+% \providecommand{\abs}[1]{\left\lvert#1\right\rvert}% 绝对值 - \abs{}
+% \providecommand{\norm}[1]{\left\lVert#1\right\rVert}% 范数 - \norm{}
+% \providecommand{\bra}[1]{\left\langle#1\right\rvert}% 左矢 - \bra{}
+% \providecommand{\ket}[1]{\left\lvert#1\right\rangle}% 右矢 - \ket{}
+% \providecommand{\braket}[2]{\left\langle#1\vert#2\right\rangle}% 右矢接左矢 - \braket{}{}
+% \usepackage{graphicx}% 图片 -
+% \begin{figure}[htbp]% 图片位置优先顺序：当地，页顶，页底，另起一页
+%     \centering% 图片居中
+%     \includegraphics[scale=.5]{图片文件名/路径名}
+%     \caption{图片文字说明}
+%     \label{图片引用代码}
+% \end{figure}
+% \usepackage{float}% 强制设定图片位置 - [H]
+% \usepackage{subfigure}% figure环境内多子图 -
+% \begin{figure}[htbp]% figure环境位置优先顺序：当地、页顶、页底、另起一页
+%     \centering% figure环境居中
+%     \subfigure[子图文字说明]{
+%         \label{子图引用代码}
+%         \includegraphics[width=0.45\textwidth]{子图文件名/路径}}
+%     \subfigure[子图文字说明]{
+%         \label{子图引用代码}
+%         \includegraphics[width=0.45\textwidth]{子图文件名/路径}}
+%     \caption{总文字说明}
+%     \label{总引用代码}
+% \end{figure}
+% \usepackage{multirow}% 表格内多行单元格合并
+% \usepackage{booktabs}% 三线表 - \toprule, \midrule, \bottomrule
+% \usepackage{longtable}% 表格跨页 -
+% \begin{center}% 表格居中
+%     \begin{longtable}{lcr}% 表格列对齐: l = 居左, c = 居中, r = 居右
+%         \caption{表格文字说明}
+%         \label{表格引用代码}
+%     \end{longtable}
+% \end{center}
+% \usepackage[version=4]{mhchem}% 化学式 - \ce{}
+
+
+\begin{document}
+\thispagestyle{FirstPageStyle}% 设定首页页眉和页脚风格
+\begin{prob}对于自由Dirac场，证明下列非等时反对易关系
+    \[
+        \{ \psi_\alpha(x), \bar{\psi}_\beta(0) \} = i\left( \gamma_\mu\frac{\partial }{\partial x_\mu} - m \right)_{\alpha\beta} D(x)
+    \]
+    其中
+    \[
+        D(x) = \int \frac{d^3\vec{k}}{(2\pi)^3}e^{i\vec{k}\cdot\vec{x}} \frac{\sin\omega t}{\omega}
+    \]
+    \[
+        \omega = \sqrt{\vec{k}^2+m^2}
+    \]
+\end{prob}
+
+\begin{sol}
+Dirac场算符为：
+\[
+    \psi_\alpha(\vec{r},t) = \frac{1}{\sqrt{\Omega}} \sum_{\vec{p},s} \left[ a_{\vec{p},s}(t) \left( u_{\vec{p},s} \right)_\alpha e^{i\vec{p} \cdot \vec{r}} + b^{\dagger}_{\vec{p},s}(t) \left( v_{\vec{p},s} \right)_\alpha e^{-i\vec{p}\cdot\vec{r}} \right].
+\]
+对于自由Dirac场，由Heisenberg运动方程可知：
+\[
+    \begin{aligned}
+    a_{\vec{p},s}(t) &= a_{\vec{p},s}e^{-iE_pt} = a_{\vec{p},s} e^{-i\omega t}, ~~ a^\dagger_{\vec{p},s}(t) = a^\dagger_{\vec{p},s}e^{iE_pt} = a^\dagger_{\vec{p},s} e^{i\omega t}; \\
+    b_{\vec{p},s}(t) &= b_{\vec{p},s}e^{-iE_pt} = b_{\vec{p},s} e^{-i\omega t}, ~~ a^\dagger_{\vec{p},s}(t) = b^\dagger_{\vec{p},s}e^{iE_pt} = b^\dagger_{\vec{p},s} e^{i\omega t}.
+    \end{aligned}
+\]
+从而场算符为：
+\[
+    \begin{aligned}
+    &\psi_\alpha(\vec{r},t) = \frac{1}{\sqrt{\Omega}} \sum_{\vec{p},s} \left[ a_{\vec{p},s} \left(u_{\vec{p},s}\right)_\alpha e^{i(\vec{p}\cdot\vec{r} - \omega t)} + b^\dagger_{\vec{p},s} \left(v_{\vec{p},s}\right)_\alpha e^{-i(\vec{p}\cdot\vec{r}-\omega t)} \right]; \\
+    &\bar{\psi}_\beta(0,0) = \frac{1}{\sqrt{\Omega}} \sum_{\vec{p},s} \left[ a^\dagger_{\vec{p},s} \left(u_{\vec{p},s}^\dagger \gamma_4\right)_\beta + b_{\vec{p},s} \left(v_{\vec{p},s}^\dagger\gamma_4\right)_\beta \right]
+    \end{aligned}
+\]
+可以计算非等时反对易关系如下：
+\[
+    \begin{aligned}
+    \left\{ \psi_\alpha(x), \bar{\psi}_\beta(0) \right\} &= \frac{1}{\Omega} \sum_{\vec{p},s;\vec{p}',s'} \left\{ a_{\vec{p},s} \left(u_{\vec{p},s}\right)_\alpha e^{i(\vec{p}\cdot\vec{r} - \omega t)} + b^\dagger_{\vec{p},s} \left(v_{\vec{p},s}\right)_\alpha e^{-i(\vec{p}\cdot\vec{r}-\omega t)}, ~~ a^\dagger_{\vec{p}',s'} \left(u_{\vec{p}',s'}^\dagger \gamma_4\right)_\beta + b_{\vec{p},s} \left(v_{\vec{p}',s'}^\dagger \gamma_4\right)_\beta \right\} \\
+    &= \frac{1}{\Omega} \sum_{\vec{p},s} \left[ \left( u_{\vec{p},s} \right)_\alpha \left(u_{\vec{p},s}^\dagger \gamma_4 \right)_\beta e^{-i\omega t} + \left( v_{-\vec{p},s} \right)_\alpha \left( v_{-\vec{p},s}^\dagger\gamma_4 \right)_\beta e^{i\omega t} \right] e^{i\vec{p}\cdot\vec{r}} \\
+    &= \frac{1}{\Omega} \sum_{\vec{p}} \left[ \left(\sum_s u_{\vec{p},s} u_{\vec{p},s}^\dagger \beta\right)_{\alpha\beta}e^{-i\omega t} + \left(\sum_s v_{-\vec{p},s} v_{-\vec{p},s}^\dagger \beta\right)_{\alpha\beta}e^{i\omega t} \right] e^{i\vec{k}\cdot\vec{r}} \\
+    &= \frac{1}{\Omega} \sum_{\vec{p}} \left[ \left(\frac{\slashed{p} + m}{2p_0}\right)_{\alpha\beta} e^{-i\omega t} + \left(\frac{-\slashed{p} - m}{2p_0}\right)_{\alpha\beta} e^{i\omega t} \right] e^{i\vec{k}\cdot\vec{r}} \\
+    &= \frac{1}{\Omega} \sum_{\vec{p}} \left[ \left( \frac{-\slashed{p} - m}{\omega}\right)_{\alpha\beta}i\sin\omega t \right] e^{i\vec{k}\cdot\vec{r}} \\
+    &= \frac{1}{\Omega} \sum_{\vec{p}} i\left( \gamma_\mu \frac{\partial }{\partial x_{\mu}} - m \right)_{\alpha\beta} \frac{\sin\omega t}{\omega} e^{i\vec{k}\cdot\vec{r}} \\
+    &= i\left( \gamma_\mu \frac{\partial }{\partial x_{\mu}} - m \right)_{\alpha\beta} \int \frac{d^3\vec{k}}{(2\pi)^3} e^{i\vec{k}\cdot\vec{x}} \frac{\sin\omega t}{\omega}.
+    \end{aligned}
+\]
+其中，利用了$p_0 = \sqrt{\vec{k}^2 + m^2} = \omega$和$\slashed{p} = -i\gamma_mu p_\mu = -\gamma_\mu \frac{\partial}{\partial x_\mu}$。 \\
+即有：
+\[
+    \left\{ \psi_\alpha(x), \bar{\psi}_\beta(0) \right\} = i\left( \gamma_\mu \frac{\partial }{\partial x_{\mu}} - m \right)_{\alpha\beta} D(x).
+\]
+% 当$\alpha \neq \beta$时，容易得到$\left\{ \psi_\alpha(x), \bar{\psi}_\beta(0) \right\} = 0$。 \\
+% 当$\alpha = \beta = 1$时，有：
+% \[
+%     \left\{ \psi_\alpha(x), \bar{\psi}_\beta(0) \right\} = \frac{1}{\Omega} \sum_{\vec{p}} \left( \cos\omega t - i\frac{m}{\omega}\sin\omega t \right) e^{i\vec{k}\cdot\vec{x}}
+% \]
+% 当$\alpha = \beta = 2$时，有：
+% \[
+%     \left\{ \psi_\alpha(x), \bar{\psi}_\beta(0) \right\} = \frac{1}{\Omega} \sum_{\vec{p}} \left( -\cos\omega t - i\frac{m}{\omega}\sin\omega t \right) e^{i\vec{k}\cdot\vec{x}}
+% \]
+\end{sol}
+
+
+\begin{prob}证明$\bar{\psi}(x)\gamma_\mu\psi(x)$为一Lorentz矢量。
+
+\end{prob}
+
+\begin{sol}
+进行坐标变换之后满足：
+\[
+    \psi'(x') = D(a) \psi(x);
+\]
+可以计算得：
+\[
+    \bar{\psi}'(x') = \psi'^\dagger \gamma_4 = \psi^\dagger(x) D^\dagger(a)\gamma_4 = \psi^\dagger(x) \gamma_4 D^{-1}(a).
+\]
+则有：
+\[
+    \bar{\psi}'(x') \gamma_\mu \psi'(x') = \psi^\dagger(x) \gamma_4 D^{-1}(a)\gamma_\mu D(a) \psi(x) = \psi^\dagger(x) \gamma_4 a_{\mu\nu}\gamma_\nu \psi(x) = a_{\mu\nu} \psi^\dagger(x) \gamma_4 \gamma_\nu \psi(x).
+\]
+即$\bar{\psi}(x)\gamma_\mu\psi(x)$为一Lorentz矢量。
+\end{sol}
+
+
+\begin{prob}证明电荷共轭旋量$\psi^c(x) = \gamma_2\psi^*(x)$与$\psi(x)$的Lorentz变换相同。
+
+
+\end{prob}
+
+\begin{sol}
+要证明$\psi^c(x) = \gamma_2\psi^*(x)$与$\psi(x)$的Lorentz变换相同，即需要证明存在$D(a)$满足：
+\[
+    \psi'(x') = D(a)\psi(x); ~~ \psi'^c(x') = D(a)\psi^c(x).
+\]
+第一个方程两边取复共轭，有：
+\[
+    \psi'{}^* (x') = D^*(a)\psi^*(x).
+\]
+带入第二个方程得：
+\[
+    \psi'^c(x') = \gamma_2\psi'^*(x') = \gamma_2 D^*(a)\psi^*(x) = D(a)\gamma_2\psi^*(x).
+\]
+即只需要证明：
+\[
+    \gamma_2D^*(a) = D(a)\gamma_2.
+\]
+考虑无穷小Lorentz变换的$D(a) = 1+\frac{i}{4}\varepsilon_{\mu\nu}\sigma_{\mu\nu}$。其中$\varepsilon_{ij} = -\varepsilon_{ji}$为实数；$\varepsilon_{j4} = -\varepsilon_{4j}$为虚数；$\varepsilon_{\mu\mu} = 0$。则可以得到$D(a)$为：
+\[
+    D(a) = 1 + \frac{i}{4}(\varepsilon_{ij}\sigma_{ij} + \varepsilon_{j4}\sigma_{j4} + \varepsilon_{4j}\sigma_{4j}) = 1 + \frac{i}{2}\left( \sum_{i<j} \varepsilon_{ij}\sigma_{ij} + \sum_{j=1}^3 \varepsilon_{j4}\sigma_{j4} \right).
+\]
+由Pauli矩阵的表达式可以计算：
+\[
+    \gamma_1^* = -\gamma_1; ~~ \gamma_2^* = \gamma_2; ~~ \gamma_3^* = -\gamma_3; ~~ \gamma_4^* = \gamma_4.
+\]
+进而可以计算：
+\[
+    \sigma_{12}^* = -\frac{1}{2i}(\gamma_1^* \gamma_2^* - \gamma_2^*\gamma_1^*) = \sigma_{12}; ~~ \sigma_{13}^* = -\sigma_{13}; ~~ \sigma_{23}^* = \sigma_{23}; ~~ \sigma_{14}^* = \sigma_{14}; ~~ \sigma_{24}^* = -\sigma_{24}; ~~ \sigma_{34}^* = \sigma_{34}
+\]
+则有：
+\[
+    D^*(a) = 1 - \frac{i}{2}\left( \varepsilon_{12}\sigma_{12} - \varepsilon_{13}\sigma_{13} + \varepsilon_{23}\sigma_{23} - \varepsilon_{14}\sigma_{14} + \varepsilon_{24}\sigma_{24} - \varepsilon_{34}\sigma_{34} \right).
+\]
+可以计算得：
+\[
+    \begin{aligned}
+    &\gamma_2 \sigma_{12} = \frac{1}{2i}(\gamma_2\gamma_1\gamma_2 - \gamma_2^2\gamma_1) = \frac{1}{2i}(\gamma_2\gamma_1 - \gamma_1\gamma_2)\gamma_2 = -\sigma_{12}\gamma_2; \\
+    &\gamma_2 \sigma_{13} = \frac{1}{2i}(\gamma_2\gamma_1\gamma_3 - \gamma_2\gamma_3\gamma_1) = \frac{1}{2i}(\gamma_1\gamma_3-\gamma_3\gamma_1)\gamma_2 = \sigma_{13}\gamma_2; \\
+    &\gamma_2\sigma_{23} = \frac{1}{2i}(\gamma_2^2\gamma_3-\gamma_2\gamma_3\gamma_2) = \frac{1}{2i}(\gamma_3\gamma_2 - \gamma_2\gamma_3)\gamma_2 = -\sigma_{23}\gamma_2; \\
+    &\gamma_2\sigma_{14} = \frac{1}{2i}(\gamma_2\gamma_1\gamma_4 - \gamma_4\gamma_1\gamma_2) = \frac{1}{2i}(\gamma_1\gamma_4-\gamma_4\gamma_1)\gamma_2 = \sigma_{14}\gamma_2; \\
+    &\gamma_2 \sigma_{24} = \frac{1}{2i}(\gamma_2^2\gamma_4 - \gamma_2\gamma_4\gamma_2) = \frac{1}{2i}(\gamma_4\gamma_2-\gamma_2\gamma_4)\gamma_2 = -\sigma_{24}\gamma_2; \\
+    &\gamma_2\sigma_{34} = \frac{1}{2i}(\gamma_2\gamma_3\gamma_4 - \gamma_2\gamma_4\gamma_3) = \frac{1}{2i}(\gamma_3\gamma_4-\gamma_4\gamma_3)\gamma_2 = \sigma_{34}\gamma_2.
+    \end{aligned}
+\]
+从而有：
+\[
+    \gamma_2 D^*(a) = \gamma_2 + \frac{i}{2}(\varepsilon_{12}\sigma_{12} + \varepsilon_{13}\sigma_{13} + \varepsilon_{23}\sigma_{23} + \varepsilon_{14}\sigma_{14} + \varepsilon_{24}\sigma_{24} + \varepsilon_{34}\sigma_{34})\gamma_2 = D(a)\gamma_2.
+\]
+综上所述，电荷共轭旋量$\psi^c(x) = \gamma_2\psi^*(x)$与$\psi(x)$的Lor
+\end{sol}
+
+\end{document}

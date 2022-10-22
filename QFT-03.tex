@@ -1,0 +1,324 @@
+% !TEX program = pdflatex
+% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error "%DOC%"
+% 作业模板
+\documentclass[UTF8,10pt,a4paper]{article}
+\usepackage[UTF8]{ctex}% 中文支持
+\usepackage{braket}% Q.M. 
+\usepackage{enumerate}
+\usepackage{slashed} %字母画斜线 \slashed{D}
+% 将全角句号映射为全角句点，需xelatex编译
+% \catcode`\。=\active
+% \newcommand{。}{．}
+% 作业信息
+\newcommand{\CourseName}{相对论量子场论}
+\newcommand{\CourseCode}{PHYS2124}
+\newcommand{\Semester}{22-23学年秋学期}
+\newcommand{\ProjectName}{作业三}
+\newcommand{\DueTimeType}{截止日期}
+\newcommand{\DueTime}{22.10.04}
+\newcommand{\StudentName}{董建宇}
+\newcommand{\StudentID}{2019511017}
+\usepackage[vmargin=1in,hmargin=.5in]{geometry}% 页边距
+\usepackage{fancyhdr}% 页眉和页脚
+\usepackage{lastpage}% 返回末页页码
+\usepackage{calc}% 返回文本宽度
+\pagestyle{fancy}% 全局页眉和页脚风格
+\fancyhf{}% 清除预设的页眉和页脚
+\fancyhead[L]{\CourseName}% 页眉左
+\fancyhead[C]{\ProjectName}% 页眉中
+\fancyhead[R]{\StudentName}% 页眉右
+\fancyfoot[R]{\thepage\ / \pageref{LastPage}}% 页脚右
+\setlength\headheight{12pt}% 页眉高
+\fancypagestyle{FirstPageStyle}{% 首页页眉和页脚风格
+    \fancyhf{}% 清除预设的页眉和页脚
+    \fancyhead[L]{\CourseName\\
+        \CourseCode\\
+        \Semester}% 页眉左
+    \fancyhead[C]{{\Huge\bfseries\ProjectName}\\
+        \DueTimeType\ : \DueTime}% 页眉中
+    \fancyhead[R]{姓名 : \makebox[\widthof{\StudentID}][s]{\StudentName}\\
+        学号 : \StudentID\\
+        成绩 : \underline{\makebox[\widthof{\StudentID}]{}}}% 页眉右
+    \fancyfoot[R]{\thepage\ / \pageref{LastPage}}% 页脚右
+    \setlength\headheight{36pt}% 页眉高
+}
+\usepackage{amsmath,amssymb,amsthm,bm}% 基础数学支持，特殊数学字符，自定义定理，公式内加粗
+\allowdisplaybreaks[4]% 公式跨页
+\newtheoremstyle{Problem}% 定理风格名称
+{}% 定理上方空间尺寸，留空为默认
+{}% 定理下方空间尺寸，留空为默认
+{}% 定理主体字体
+{}% 定理缩进量
+{\bfseries}% 定理开头字体
+{.}% 定理开头后所接标点
+{ }% 定理开头后所接空间尺寸，空格为默认词间距
+{第\thmnumber{ #2}\thmname{ #1}\thmnote{ (#3)} 得分: \underline{\qquad\qquad}}% 定理开头格式，留空为默认
+\theoremstyle{Problem}% 设定定理风格
+\newtheorem{prob}{题}% 题目
+\newtheoremstyle{Solution}% 定理风格名称
+{}% 定理上方空间尺寸，留空为默认
+{}% 定理下方空间尺寸，留空为默认
+{}% 定理主体文本字体
+{}% 定理缩进量
+{\bfseries}% 定理开头字体
+{:}% 定理开头后所接标点
+{ }% 定理开头后所接空间尺寸，空格为默认词间距
+{\thmname{#1}}% 定理开头格式
+\makeatletter
+\def\@endtheorem{\qed\endtrivlist\@endpefalse}% 题解后添加qed符号（黑色空心小正方形）
+\makeatother
+\theoremstyle{Solution}% 设定定理风格
+\newtheorem*{sol}{解}% 题解
+% \usepackage{mathrsfs}% 公式内花体字母 - \mathscr{}
+% \usepackage{esint}% 特殊积分号
+% \providecommand{\abs}[1]{\left\lvert#1\right\rvert}% 绝对值 - \abs{}
+% \providecommand{\norm}[1]{\left\lVert#1\right\rVert}% 范数 - \norm{}
+% \providecommand{\bra}[1]{\left\langle#1\right\rvert}% 左矢 - \bra{}
+% \providecommand{\ket}[1]{\left\lvert#1\right\rangle}% 右矢 - \ket{}
+% \providecommand{\braket}[2]{\left\langle#1\vert#2\right\rangle}% 右矢接左矢 - \braket{}{}
+% \usepackage{graphicx}% 图片 -
+% \begin{figure}[htbp]% 图片位置优先顺序：当地，页顶，页底，另起一页
+%     \centering% 图片居中
+%     \includegraphics[scale=.5]{图片文件名/路径名}
+%     \caption{图片文字说明}
+%     \label{图片引用代码}
+% \end{figure}
+% \usepackage{float}% 强制设定图片位置 - [H]
+% \usepackage{subfigure}% figure环境内多子图 -
+% \begin{figure}[htbp]% figure环境位置优先顺序：当地、页顶、页底、另起一页
+%     \centering% figure环境居中
+%     \subfigure[子图文字说明]{
+%         \label{子图引用代码}
+%         \includegraphics[width=0.45\textwidth]{子图文件名/路径}}
+%     \subfigure[子图文字说明]{
+%         \label{子图引用代码}
+%         \includegraphics[width=0.45\textwidth]{子图文件名/路径}}
+%     \caption{总文字说明}
+%     \label{总引用代码}
+% \end{figure}
+% \usepackage{multirow}% 表格内多行单元格合并
+% \usepackage{booktabs}% 三线表 - \toprule, \midrule, \bottomrule
+% \usepackage{longtable}% 表格跨页 -
+% \begin{center}% 表格居中
+%     \begin{longtable}{lcr}% 表格列对齐: l = 居左, c = 居中, r = 居右
+%         \caption{表格文字说明}
+%         \label{表格引用代码}
+%     \end{longtable}
+% \end{center}
+% \usepackage[version=4]{mhchem}% 化学式 - \ce{}
+
+
+\begin{document}
+\thispagestyle{FirstPageStyle}% 设定首页页眉和页脚风格
+\begin{prob}
+    \begin{enumerate}[(i)]
+        \item 证明下列旋量波函数的表达式：
+        \[
+            u_{\vec{p},s} = \eta \left(\begin{array}{@{}c}
+                \sqrt{\frac{E_p+m}{2E_p}}\varphi_s \\
+                2s\sqrt{\frac{E_p-m}{2E_p}}\varphi_s
+            \end{array}
+            \right) 
+            ~~ 
+            v_{-\vec{p},s} = \eta' \left(\begin{array}{@{}c}
+                -2s\sqrt{\frac{E_p-m}{2E_p}} \varphi_s \\
+                \sqrt{\frac{E_p+m}{2E_p}}\varphi_s
+            \end{array}\right)
+        \]
+        其中$E_p = \sqrt{\vec{p}^2 + m^2}$，$\eta,\eta'$为任意相因子，$\vert \eta \vert = \vert \eta' \vert = 1$，$2\times 1$列矩阵$\varphi_s$为$\vec{\tau}\cdot\hat{p}$的本征矢量，即
+        \[
+            \vec{\tau}\cdot \hat{p} \varphi_s = 2s \varphi_s
+        \]
+
+        \item 讨论上述旋量波函数的非相对论极限。
+    \end{enumerate}
+\end{prob}
+
+\begin{sol}
+(i)旋量波函数$u_{\vec{p},s}$满足
+\[
+    \left\{ \begin{aligned}
+    &(\vec{\alpha} \cdot \vec{p} + \beta m) u_{\vec{p},s} = E_p u_{\vec{p},s}, \\
+    &\vec{\sigma} \cdot \hat{p} u_{\vec{p},s} = 2s u_{\vec{p},s}.
+    \end{aligned} \right.
+\]
+其中$\vec{\alpha} = \rho_1 \vec{\sigma} = \begin{pmatrix}
+    0 & \vec{\tau} \\
+    \vec{\tau} & 0
+\end{pmatrix}, \beta = \begin{pmatrix}
+    I & 0 \\
+    0 & -I
+\end{pmatrix}$。令$u_{\vec{p},s} = \begin{pmatrix}
+    u_1 \\
+    u_2
+\end{pmatrix}$，其中$u_1,u_2$分别表示两个$2\times 1$列矩阵。则上述方程可以写为：
+\[
+    \begin{pmatrix}
+        m & \vec{\tau} \cdot \vec{p} \\
+        \vec{\tau} \cdot \vec{p} & -m
+    \end{pmatrix}
+    \begin{pmatrix}
+        u_1 \\
+        u_2
+    \end{pmatrix} = 
+    E_p \begin{pmatrix}
+        u_1 \\
+        u_2
+    \end{pmatrix}; 
+    ~~ 
+    \begin{pmatrix}
+        \vec{\tau}\cdot\hat{p} & 0 \\
+        0 & \vec{\tau}\cdot\hat{p}
+    \end{pmatrix}
+    \begin{pmatrix}
+        u_1 \\
+        u_2
+    \end{pmatrix} = 
+    2s\begin{pmatrix}
+        u_1 \\
+        u_2
+    \end{pmatrix}.
+\]
+可以验证：
+\[
+    \begin{aligned}
+    &\eta \left( m\sqrt{\frac{E_p+m}{2E_p}} + (2s)^2 \vert \vec{p} \vert \sqrt{\frac{E_p-m}{2E_p}} \right)\varphi_s = \eta \sqrt{\frac{E_p+m}{2E_p}} \left( m + \vert \vec{p} \vert \frac{E_p-m}{\sqrt{E_p^2 - m^2}} \right) \varphi_s = \eta \sqrt{\frac{E_p+m}{2E_p}}\varphi_s; \\
+    &\eta \left( 2s \vert \vec{p} \vert \sqrt{\frac{E_p+m}{2E_p}} -m 2s\sqrt{\frac{E_p-m}{2E_p}} \right) \varphi_s = \eta(2s) \sqrt{\frac{E_p-m}{2E_p}} \left( \vert \vec{p} \vert \frac{E_p+m}{\sqrt{E_p^2-m^2}} - m \right)\varphi_s = \eta 2s \sqrt{\frac{E_p-m}{2E_p}} \varphi_s.
+    \end{aligned}
+\]
+其中，利用了$\sqrt{E_p^2 - m^2} = \vert \vec{p} \vert$和$2s = \pm 1,4s^2 = 1$。 \\
+同理，对于$v_{-\vec{p},s}$，Dirac Hamiltonian为：
+\[
+    \left\{ \begin{aligned}
+    &(\vec{\alpha} \cdot \vec{p} + \beta m) v_{-\vec{p},s} = -E_p u_{-\vec{p},s}, \\
+    &\vec{\sigma} \cdot \hat{p} v_{-\vec{p},s} = 2s v_{-\vec{p},s}.
+    \end{aligned} \right.
+\]
+可以验证：
+\[
+    \begin{aligned}
+    &\eta' \left( -2sm\sqrt{\frac{E_p-m}{2E_p}} + 2s \vert \vec{p} \vert \sqrt{\frac{E_p+m}{2E_p}} \right)\varphi_s = \eta' (-2s) \sqrt{\frac{E_p-m}{2E_p}} \left( m - \vert \vec{p} \vert \frac{E_p+m}{\sqrt{E_p^2 - m^2}} \right)\varphi_s = -E_p \eta' (-2s) \sqrt{\frac{E_p-m}{2E_p}} \varphi_s; \\
+    &\eta' \left( -(2s)^2\vert \vec{p} \vert \sqrt{\frac{E_p - m}{2E_p}} - m\sqrt{\frac{E_p+m}{2E_p}} \right)\varphi_s = -\eta' \sqrt{\frac{E_p+m}{2E_p}} \left( \vert \vec{p} \vert \frac{E_p-m}{\sqrt{E_p^2-m^2}} + m \right) \varphi_s = -\eta' \sqrt{\frac{E_p+m}{2E_p}} \varphi_s.
+    \end{aligned}
+\]
+(ii)对于非相对论极限，有$m >> \vert \vec{p} \vert$，即有：
+\[
+    \frac{E_p}{m} = \sqrt{1 + \frac{\vec{p}^2}{m^2}} = 1 + \frac{\vec{p}^2}{2m^2} + \mathcal{O}(\vec{p}^2/m^2).
+\]
+则有：
+\[
+    \left\{\begin{aligned}
+    &\frac{E_p+m}{2E_p} = \frac{1}{2} + \frac{1}{2(E_p/m)} = \frac{1}{2} + \frac{1}{2}\left( 1 - \frac{\vec{p}^2}{2m^2} \right) = 1 - \frac{\vec{p}^2}{4m^2}; \\
+    &\frac{E_p-m}{2E_p} = \frac{1}{2} - \frac{1}{2(E_p/m)} = \frac{1}{2} - \frac{1}{2}\left( 1 - \frac{\vec{p}^2}{2m^2} \right) = \frac{\vec{p}^2}{4m^2}.
+    \end{aligned}\right.
+\]
+进而有：
+\[
+    \left\{\begin{aligned}
+    &\sqrt{\frac{E_p+m}{2E_p}} = \sqrt{1 - \frac{\vec{p}^2}{4m^2}} = 1 - \frac{\vec{p}^2}{8m^2}; \\
+    &\sqrt{\frac{E_p-m}{2E_p}} = \frac{\vert \vec{p} \vert}{2m}.
+    \end{aligned}\right.
+\]
+则上述旋量波函数的非相对论极限为：
+\[
+    u_{\vec{p},s} = \eta \begin{pmatrix}
+        \sqrt{1 - \frac{\vec{p}^2}{4m^2}} \varphi_s \\
+        s\frac{\vert \vec{p} \vert}{m}\varphi_s
+    \end{pmatrix}
+    ~~
+    v_{-\vec{p},s} = \eta' \begin{pmatrix}
+        -s\frac{\vert \vec{p} \vert}{m} \varphi_s \\
+        \sqrt{1 - \frac{\vec{p}^2}{4m^2}} \varphi_s
+    \end{pmatrix}
+\]
+\end{sol}
+
+\begin{prob}[]证明
+    \begin{align*}
+        \sum_s u_{\vec{p},s} u_{\vec{p},s}^\dagger \beta = \frac{\slashed{p}+m}{2p_0} \\
+        \sum_s v_{\vec{p},s} v_{\vec{p},s}^\dagger \beta = \frac{\slashed{p}-m}{2p_0}
+    \end{align*}
+    其中$\slashed{p} = -i\gamma_\mu p_\mu$，$p_4 = ip_0 = i\sqrt{\vec{p}^2 + m^2}$。
+\end{prob}
+
+\begin{sol}
+可以计算得：
+\[
+    u_{\vec{p},s} u_{\vec{p},s}^\dagger \beta = 
+    \begin{pmatrix}
+        \sqrt{\frac{E_p+m}{2E_p}} \varphi_s \\
+        2s\sqrt{\frac{E_p-m}{2E_p}} \varphi_s
+    \end{pmatrix}
+    \begin{pmatrix}
+        \sqrt{\frac{E_p+m}{2E_p}} \varphi_s^\dagger & 2s \sqrt{\frac{E_p-m}{2E_p}} \varphi_s^\dagger
+    \end{pmatrix}
+    \begin{pmatrix}
+        I & 0 \\
+        0 & -I
+    \end{pmatrix} = 
+    \begin{pmatrix}
+        \frac{E_p+m}{2E_p}\varphi_s\varphi_s^\dagger & -s\frac{\vert \vec{p} \vert}{E_p} \varphi_s\varphi_s^\dagger \\
+        s\frac{\vert \vec{p} \vert}{E_p}\varphi_s\varphi_s^\dagger & -\frac{E_p-m}{2E_p}\varphi_s\varphi_s^\dagger
+    \end{pmatrix}
+\]
+对于等号右侧，可以计算：
+\[
+    \frac{\slashed{p} + m}{2p_0} = \frac{1}{2E_p} (-i\vec{\gamma} \cdot \vec{p} - i\gamma_4p_4 + m) = \frac{1}{2E_p} \begin{pmatrix}
+        E_p + m & -\vec{\tau} \cdot \vec{p} \\
+        \vec{\tau} \cdot \vec{p} & m-E_p
+    \end{pmatrix}
+\]
+注意到：
+\[
+    \sum_s s\vert \vec{p} \vert \varphi_s \varphi_s^\dagger = \sum_s \tau \cdot \vec{p} \varphi_s \varphi_s^\dagger = \tau \cdot \vec{p} \sum_s \varphi_s \varphi_s^\dagger = \tau \cdot \vec{p}.
+\]
+其中，利用了$\sum_s \varphi_s \varphi_s^\dagger = I$。则有：
+\[
+    \sum_s u_{\vec{p},s} u_{\vec{p},s}^\dagger \beta = \frac{1}{2E_p} \begin{pmatrix}
+        (E_p+m) \sum_s \varphi_s \varphi_s^\dagger & \sum_s -2s \vert \vec{p} \vert \varphi_s \varphi_s^\dagger \\
+        \sum_s 2s\vert \vec{p} \vert \varphi_s \varphi_s^\dagger & (m-E_p) \sum_s \varphi_s \varphi_s^\dagger 
+    \end{pmatrix} = \frac{1}{2E_p}
+    \begin{pmatrix}
+        E_p+m & -\tau \cdot \vec{p} \\
+        \tau \cdot \vec{p} & m-E_p
+    \end{pmatrix} = \frac{\slashed{p} + m}{2p_0}
+\]
+同理，对于第二个方程，可以计算：
+\[
+    v_{\vec{p},s}v_{\vec{p},s}^\dagger \beta = \begin{pmatrix}
+        -2s\sqrt{\frac{E_p-m}{2E_p}}\varphi_s \\
+        \sqrt{\frac{E_p+m}{2E_p}}\varphi_s
+    \end{pmatrix}
+    \begin{pmatrix}
+        -2s\sqrt{\frac{E_p-m}{2E_p}}\varphi_s^\dagger & \sqrt{\frac{E_p+m}{2E_p}}\varphi_s^\dagger
+    \end{pmatrix}
+    \begin{pmatrix}
+        I & 0 \\
+        0 & -I
+    \end{pmatrix} = 
+    \begin{pmatrix}
+        \frac{E_p - m}{2E_p} \varphi_s \varphi_s^\dagger & s \frac{\vert \vec{p} \vert}{E_p} \varphi_s \varphi_s^\dagger \\
+        -s\frac{\vert \vec{p} \vert}{E_p} \varphi_s \varphi_s^\dagger & -\frac{E_p+m}{2E_p}\varphi_s \varphi_s^\dagger
+    \end{pmatrix}
+\]
+求和得到：
+\[
+    \sum_s v_{\vec{p},s} v_{\vec{p},s}^\dagger \beta = \frac{1}{2E_p} \begin{pmatrix}
+        (E_p-m)\sum_s \varphi_s \varphi_s^\dagger & \sum_s 2s \vert \vec{p} \vert \varphi_s \varphi_s^\dagger \\
+        \sum_s -2s\vert \vec{p} \vert \varphi_s \varphi_s^\dagger & -(E_p+m) \sum_s \varphi_s \varphi_s^\dagger
+    \end{pmatrix} = \frac{1}{2E_p} 
+    \begin{pmatrix}
+        E_p - m & \tau \cdot \vec{p} \\
+        -\tau \cdot \vec{p} & -E_p-m
+     \end{pmatrix}
+\]
+对于等号右侧，可以计算：
+\[
+    \frac{\slashed{p} - m}{2p_0} = \frac{1}{2E_p} (-i\vec{\gamma}\cdot\vec{p} - i\gamma_4p_4 - m) = \frac{1}{2E_p}\begin{pmatrix}
+        E_p - m & \vec{\tau} \cdot \vec{p} \\
+        -\vec{\tau} \cdot \vec{p} & - E_p - m
+    \end{pmatrix} = \sum_s v_{\vec{p},s} v_{\vec{p},s}^\dagger \beta.
+\]
+\end{sol}
+
+\end{document}

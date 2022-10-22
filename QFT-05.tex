@@ -1,0 +1,277 @@
+% !TEX program = pdflatex
+% !TEX options = -synctex=1 -interaction=nonstopmode -file-line-error "%DOC%"
+% 作业模板
+\documentclass[UTF8,10pt,a4paper]{article}
+\usepackage[UTF8]{ctex}% 中文支持
+\usepackage{braket}% Q.M. 
+\usepackage{enumerate}
+\usepackage{slashed}
+% 将全角句号映射为全角句点，需xelatex编译
+% \catcode`\。=\active
+% \newcommand{。}{．}
+% 作业信息
+\newcommand{\CourseName}{相对论量子场论}
+\newcommand{\CourseCode}{PHYS2124}
+\newcommand{\Semester}{22-23学年第一学期}
+\newcommand{\ProjectName}{作业五}
+\newcommand{\DueTimeType}{截止日期}
+\newcommand{\DueTime}{22.10.23}
+\newcommand{\StudentName}{董建宇}
+\newcommand{\StudentID}{2019511017}
+\usepackage[vmargin=1in,hmargin=.5in]{geometry}% 页边距
+\usepackage{fancyhdr}% 页眉和页脚
+\usepackage{lastpage}% 返回末页页码
+\usepackage{calc}% 返回文本宽度
+\pagestyle{fancy}% 全局页眉和页脚风格
+\fancyhf{}% 清除预设的页眉和页脚
+\fancyhead[L]{\CourseName}% 页眉左
+\fancyhead[C]{\ProjectName}% 页眉中
+\fancyhead[R]{\StudentName}% 页眉右
+\fancyfoot[R]{\thepage\ / \pageref{LastPage}}% 页脚右
+\setlength\headheight{12pt}% 页眉高
+\fancypagestyle{FirstPageStyle}{% 首页页眉和页脚风格
+    \fancyhf{}% 清除预设的页眉和页脚
+    \fancyhead[L]{\CourseName\\
+        \CourseCode\\
+        \Semester}% 页眉左
+    \fancyhead[C]{{\Huge\bfseries\ProjectName}\\
+        \DueTimeType\ : \DueTime}% 页眉中
+    \fancyhead[R]{姓名 : \makebox[\widthof{\StudentID}][s]{\StudentName}\\
+        学号 : \StudentID\\
+        成绩 : \underline{\makebox[\widthof{\StudentID}]{}}}% 页眉右
+    \fancyfoot[R]{\thepage\ / \pageref{LastPage}}% 页脚右
+    \setlength\headheight{36pt}% 页眉高
+}
+\usepackage{amsmath,amssymb,amsthm,bm}% 基础数学支持，特殊数学字符，自定义定理，公式内加粗
+\allowdisplaybreaks[4]% 公式跨页
+\newtheoremstyle{Problem}% 定理风格名称
+{}% 定理上方空间尺寸，留空为默认
+{}% 定理下方空间尺寸，留空为默认
+{}% 定理主体字体
+{}% 定理缩进量
+{\bfseries}% 定理开头字体
+{.}% 定理开头后所接标点
+{ }% 定理开头后所接空间尺寸，空格为默认词间距
+{第\thmnumber{ #2}\thmname{ #1}\thmnote{ (#3)} 得分: \underline{\qquad\qquad}}% 定理开头格式，留空为默认
+\theoremstyle{Problem}% 设定定理风格
+\newtheorem{prob}{题}% 题目
+\newtheoremstyle{Solution}% 定理风格名称
+{}% 定理上方空间尺寸，留空为默认
+{}% 定理下方空间尺寸，留空为默认
+{}% 定理主体文本字体
+{}% 定理缩进量
+{\bfseries}% 定理开头字体
+{:}% 定理开头后所接标点
+{ }% 定理开头后所接空间尺寸，空格为默认词间距
+{\thmname{#1}}% 定理开头格式
+\makeatletter
+\def\@endtheorem{\qed\endtrivlist\@endpefalse}% 题解后添加qed符号（黑色空心小正方形）
+\makeatother
+\theoremstyle{Solution}% 设定定理风格
+\newtheorem*{sol}{解}% 题解
+% \usepackage{mathrsfs}% 公式内花体字母 - \mathscr{}
+% \usepackage{esint}% 特殊积分号
+% \providecommand{\abs}[1]{\left\lvert#1\right\rvert}% 绝对值 - \abs{}
+% \providecommand{\norm}[1]{\left\lVert#1\right\rVert}% 范数 - \norm{}
+% \providecommand{\bra}[1]{\left\langle#1\right\rvert}% 左矢 - \bra{}
+% \providecommand{\ket}[1]{\left\lvert#1\right\rangle}% 右矢 - \ket{}
+% \providecommand{\braket}[2]{\left\langle#1\vert#2\right\rangle}% 右矢接左矢 - \braket{}{}
+% \usepackage{graphicx}% 图片 -
+% \begin{figure}[htbp]% 图片位置优先顺序：当地，页顶，页底，另起一页
+%     \centering% 图片居中
+%     \includegraphics[scale=.5]{图片文件名/路径名}
+%     \caption{图片文字说明}
+%     \label{图片引用代码}
+% \end{figure}
+% \usepackage{float}% 强制设定图片位置 - [H]
+% \usepackage{subfigure}% figure环境内多子图 -
+% \begin{figure}[htbp]% figure环境位置优先顺序：当地、页顶、页底、另起一页
+%     \centering% figure环境居中
+%     \subfigure[子图文字说明]{
+%         \label{子图引用代码}
+%         \includegraphics[width=0.45\textwidth]{子图文件名/路径}}
+%     \subfigure[子图文字说明]{
+%         \label{子图引用代码}
+%         \includegraphics[width=0.45\textwidth]{子图文件名/路径}}
+%     \caption{总文字说明}
+%     \label{总引用代码}
+% \end{figure}
+% \usepackage{multirow}% 表格内多行单元格合并
+% \usepackage{booktabs}% 三线表 - \toprule, \midrule, \bottomrule
+% \usepackage{longtable}% 表格跨页 -
+% \begin{center}% 表格居中
+%     \begin{longtable}{lcr}% 表格列对齐: l = 居左, c = 居中, r = 居右
+%         \caption{表格文字说明}
+%         \label{表格引用代码}
+%     \end{longtable}
+% \end{center}
+% \usepackage[version=4]{mhchem}% 化学式 - \ce{}
+
+
+\begin{document}
+\thispagestyle{FirstPageStyle}% 设定首页页眉和页脚风格
+\begin{prob}
+证明
+\[
+    \begin{aligned}
+        &\frac{1}{4} \text{tr}(\slashed{A}\slashed{B}) = -(A\cdot B) \equiv A_0B_0 - \vec{A} \cdot \vec{B} \\
+        &\frac{1}{4}\text{tr}(\slashed{A}\slashed{B}\slashed{C}\slashed{D}) = (A\cdot B)(C \cdot D) - (A\cdot C)(B \cdot D) + (A \cdot D)(B \cdot C) \\
+        &\frac{1}{4}\text{tr}(\gamma_5\slashed{A}\slashed{B}\slashed{C}\slashed{D}) = \epsilon_{\mu\nu\rho\lambda} A_{\mu}B_{\nu} C_{\rho} D_{\lambda}
+    \end{aligned}
+\]
+其中$\slashed{A} = -i\gamma_\mu A_{\mu}, ~~ \slashed{B} = -i\gamma_\mu B_\mu, ~~ \text{etc.}$ \\ 
+全反对称张量
+\[
+    \epsilon_{\mu\nu\rho\lambda} = \left\{ 
+        \begin{aligned}
+            &1, &\mu,\nu,\rho,\lambda \text{为}1,2,3,4\text{的偶置换}; \\
+            &-1, &\mu,\nu,\rho,\lambda \text{为}1,2,3,4\text{的奇置换}; \\
+            &0, &otherwise.
+        \end{aligned}
+    \right.
+\]
+\end{prob}
+
+\begin{sol}
+对于Pauli矩阵$\sigma_i$有：
+\[
+    \text{tr}(\sigma_i\sigma_j) = 2\delta_{ij}.
+\]
+则对于$\gamma$矩阵，可以计算：
+\[
+    \text{tr}(\gamma_i\gamma_j) = 2\text{tr}(\sigma_i\sigma_j) = 4\delta_{ij}; ~~ \text{tr}(\gamma_i\gamma_4) = 0; ~~ \text{tr}(\gamma_4\gamma_4) = 4.
+\]
+则可以计算：
+\[
+    \frac{1}{4}\text{tr}(\slashed{A}\slashed{B}) = \frac{1}{4}\text{tr}(-\gamma_\mu A_\mu \gamma_\nu B_\nu) = -\frac{1}{4} A_\mu B_\nu \text{tr}(\gamma_\mu\gamma_\nu) = -A_\mu B_\mu = -(A\cdot B) = A_0 B_0 - \vec{A} \cdot \vec{B}.
+\]
+其中，利用了$A_4 = iA_0, ~ B_4 = iB_0$。 \\
+对于Pauli矩阵$\sigma_i$有：
+\[
+    \text{tr}(\sigma_i \sigma_j \sigma_k \sigma_l) = 2\delta_{ij}\delta_{kl} + 2\delta_{il}\delta_{jk} - 2\delta_{ik}\delta_{jl}.
+\]
+其中$i,j,k,l = 1,2,3$。 \\
+对于$\gamma_\mu \gamma_\nu \gamma_\rho \gamma_\lambda$，若只存在奇数个指标等于4，则迹为0。 \\
+若有两个指标为4，则有：
+\[
+    \begin{aligned}
+    &\text{tr}(\gamma_i \gamma_j \gamma_4 \gamma_4) = \text{tr}(\gamma_i \gamma_j) = 4\delta_{ij}; \\
+    &\text{tr}(\gamma_i \gamma_4 \gamma_k \gamma_4) = -\text{tr}(\gamma_i \gamma_k) = -4\delta_{ik}; \\
+    &\text{tr}(\gamma_i \gamma_4 \gamma_4 \gamma_l) = \text{tr}(\gamma_i \gamma_l) = 4\delta_{il}; \\
+    &\text{tr}(\gamma_4 \gamma_j \gamma_k \gamma_4) = \text{tr}(\gamma_j\gamma_k) = 4\delta_{jk}; \\
+    &\text{tr}(\gamma_4 \gamma_j \gamma_4 \gamma_l) = -\text{tr}(\gamma_j \gamma_l) = -4\delta_{jl}; \\
+    &\text{tr}(\gamma_4 \gamma_4 \gamma_k \gamma_l) = \text{tr}(\gamma_k \gamma_l) = 4\delta_{kl}.
+    \end{aligned}
+\]
+若四个指标全为4，则有：
+\[
+    \text{tr}(\gamma_4 \gamma_4 \gamma_4 \gamma_4) = 4.
+\]
+则可以计算：
+\[
+    \begin{aligned}
+    \frac{1}{4}\text{tr}(\slashed{A}\slashed{B}\slashed{C}\slashed{D}) =& \frac{1}{4}A_\mu B_{\nu} C_{\rho} D_{\lambda} \text{tr}(\gamma_\mu \gamma_\nu \gamma_\rho \gamma_\lambda) \\
+    =& \frac{1}{4} A_i B_j C_k D_l \left( 4\delta_{ij}\delta_{kl} + 4\delta_{il}\delta_{jk} - 4\delta_{ik}\delta_{jl} \right) + A_4B_4(C_i D_i) + C_4D_4(A_iB_i) \\ 
+    &- A_4C_4(B_i D_i) - B_4D_4 (A_iC_i) + A_4D_4(B_iC_i) + B_4C_4(A_iD_i) + A_4B_4C_4D_4 \\
+    =& (A_\mu B_\mu)(C_\nu D_\nu) - (A_\alpha C_\alpha) (B_\beta D_\beta) + (A_\rho D_\rho) (B_\lambda C_\lambda) \\
+    =& (A \cdot B)(C \cdot D) - (A \cdot C)(B \cdot D) + (A \cdot D)(B \cdot C).
+    \end{aligned}
+\]
+接下来计算$\text{tr}(\gamma_5 \slashed{A} \slashed{B} \slashed{C} \slashed{D})$：
+\[
+    \text{tr}(\gamma_5 \slashed{A} \slashed{B} \slashed{C} \slashed{D}) = A_\mu B_\nu C_\rho D_\lambda \text{tr}(\gamma_5 \gamma_\mu \gamma_\nu \gamma_\rho \gamma_\lambda).
+\]
+当四个参数$\mu,\nu,\rho,\lambda$至少存在两个相同时，不妨令$\mu = \nu$，容易计算$\text{tr}(\gamma_5 \gamma_\mu \gamma_\nu \gamma_\rho \gamma_\lambda) = 0$。容易计算：
+\[
+    \text{tr}(\gamma_5 \gamma_1 \gamma_2 \gamma_3 \gamma_4) = 4.
+\]
+由于$\{\gamma_\mu, \gamma_\nu\} = 0, ~ \mu\neq\nu, ~ \mu,\nu = 1,2,3,4,5$，即当$\mu,\nu,\rho,\lambda$为$1,2,3,4$的偶置换时$\text{tr}(\gamma_5 \gamma_\mu \gamma_\nu \gamma_\rho \gamma_\lambda) = 4$；当$\mu,\nu,\rho,\lambda$为$1,2,3,4$的奇置换时$\text{tr}(\gamma_5 \gamma_\mu \gamma_\nu \gamma_\rho \gamma_\lambda) = -4$。 \\
+则有：
+\[
+    \frac{1}{4}\text{tr}(\gamma_5\slashed{A}\slashed{B}\slashed{C}\slashed{D}) = \epsilon_{\mu\nu\rho\lambda} A_{\mu}B_{\nu} C_{\rho} D_{\lambda}
+\]
+其中全反对称张量
+\[
+    \epsilon_{\mu\nu\rho\lambda} = \left\{ 
+        \begin{aligned}
+            &1, &\mu,\nu,\rho,\lambda \text{为}1,2,3,4\text{的偶置换}; \\
+            &-1, &\mu,\nu,\rho,\lambda \text{为}1,2,3,4\text{的奇置换}; \\
+            &0, &otherwise.
+        \end{aligned}
+    \right.
+\]
+\end{sol}
+
+
+\begin{prob}
+考虑Lee-Yang的$\beta$-衰变相互作用$H_{int.}$。 \\
+令$\beta$-衰变所涉及的粒子的空间反演变换律为
+\[
+    \mathcal{P}\psi_a(\vec{r},t)\mathcal{P}^\dagger = \eta_a\gamma_4\psi_a(-\vec{r},t), ~~ a = n,p,e,\nu
+\]
+证明：如果任意一对$(C,C')$同时非零，即$(C_s,C_s')$同时非零，或$(C_V,C_V')$同时非零，或$(C_T,C_T')$同时非零，或$(C_A,C_A')$同时非零，或$(C_P,C_P')$同时非零，则不存在一组相因子$(\eta_n,\eta_p,\eta_e,\eta_\nu)$使得宇称在相互作用下守恒，即
+\[
+    [\mathcal{P}, H_{int.}] \neq 0.
+\]
+\end{prob}
+
+\begin{sol}
+当$(C_S,C_S')$同时非零，其余耦合常数均为0时，可以计算：
+\[
+    [\mathcal{P},H_{int}] = -\int \,d^3\vec{r} [\mathcal{P}, \mathcal{L}_{int}].
+\]
+% 令$A = [\mathcal{P}, \bar{\psi}_p \psi_n(C_S\bar{\psi}_e \psi_\nu + C_S' \bar{\psi}_e \gamma_5 \psi_\nu)]$，$B = [\mathcal{P}, (\psi_\nu^\dagger\bar{\psi}_e^\dagger C_S^* + \psi_\nu^\dagger \gamma_5 \bar{\psi}_e^\dagger C_S'^*)\psi_n^\dagger \bar{\psi}_p^\dagger] = -[\mathcal{P}^\dagger, \bar{\psi}_p \psi_n(C_S\bar{\psi}_e \psi_\nu + C_S' \bar{\psi}_e \gamma_5 \psi_\nu)]^\dagger$；则$[\mathcal{P}, \mathcal{L}_{int}] = A + B$。 \\
+% 先计算$A$：
+% \[
+%     \begin{aligned}
+%     A =& \mathcal{P}\bar{\psi}_p \psi_n(C_S\bar{\psi}_e \psi_\nu + C_S' \bar{\psi}_e \gamma_5 \psi_\nu)\mathcal{P}^\dagger \mathcal{P} - \mathcal{P}\mathcal{P}^\dagger \bar{\psi}_p \psi_n(C_S\bar{\psi}_e \psi_\nu + C_S' \bar{\psi}_e \gamma_5 \psi_\nu) \mathcal{P} \\
+%     =& \eta_p^* \eta_n \eta_e^* \eta_\nu^* \bar{\psi}(-\vec{r},t) \psi_n(-\vec{r},t) \bar{\psi}(-\vec{r},t) \psi_\nu(-\vec{r},t) \mathcal{P} - \mathcal{P} 
+%     \end{aligned}
+% \]
+
+令$A = \bar{\psi}_p \psi_n(C_S\bar{\psi}_e \psi_\nu + C_S' \bar{\psi}_e \gamma_5 \psi_\nu)$，则$\mathcal{L}_{int} = A + A^\dagger$。如果$[\mathcal{P}, \mathcal{L}_{int}] = 0$，则有：$\mathcal{P} \mathcal{L}_{int} \mathcal{P}^\dagger = \mathcal{L}_{int}$。下面计算$\mathcal{P} A \mathcal{P}^\dagger$： 
+\[
+    \begin{aligned}
+    \mathcal{P} A \mathcal{P}^\dagger =& (\mathcal{P} \psi_p^\dagger \mathcal{P}^\dagger)^\dagger \gamma_4 (\mathcal{P} \psi_n \mathcal{P}^\dagger) (C_S (\mathcal{P}\psi_e\mathcal{P}^\dagger)^\dagger \gamma_4 (\mathcal{P}\psi_\nu \mathcal{P}^\dagger) + C_S' (\mathcal{P} \psi_e \mathcal{P}^\dagger)^\dagger \gamma_4 \gamma_5 (\mathcal{P} \psi_\nu \mathcal{P}^\dagger)) \\
+    =& \eta_p^* \eta_n \eta_e^* \eta_\nu \bar{\psi}_p(-\vec{r},t) \psi_n(-\vec{r},t) [C_S \bar{\psi}_e(-\vec{r},t) \psi_\nu(-\vec{r},t) - C_S' \bar{\psi}_e(-\vec{r},t) \gamma_5 \psi_\nu(-\vec{r},t)]
+    \end{aligned}
+\]
+其中，场算符$\psi$的自变量从$\vec{r}$变成$-\vec{r}$的影响在全空间积分中被去除。所以如果有$\mathcal{P}\mathcal{L}_{int}\mathcal{P}^\dagger = \mathcal{L}_{int}$，则只有两种可能： \\
+1:$\eta_p^* \eta_n \eta_e^* \eta_\nu = 1$并且$C_S' = 0$; \\
+2:$\eta_p^* \eta_n \eta_e^* \eta_\nu = -1$并且$C_S = 0$; \\
+令$B = \bar{\psi}_p \gamma_\mu \psi_n(C_V \bar{\psi}_e \gamma_\mu \psi_\nu + C_V' \bar{\psi}_e \gamma_\mu \gamma_5 \psi_\nu)$，可以计算：
+\[
+    \begin{aligned}
+    \mathcal{P} B \mathcal{P}^\dagger =& (\mathcal{P} \psi_p^\dagger \mathcal{P}^\dagger)^\dagger \gamma_4 \gamma_\mu (\mathcal{P} \psi_n \mathcal{P}^\dagger) (C_V (\mathcal{P}\psi_e\mathcal{P}^\dagger)^\dagger \gamma_4 \gamma_\mu (\mathcal{P}\psi_\nu \mathcal{P}^\dagger) + C_V' (\mathcal{P} \psi_e \mathcal{P}^\dagger)^\dagger \gamma_4 \gamma_\mu \gamma_5 (\mathcal{P} \psi_\nu \mathcal{P}^\dagger)) \\
+    =& -\eta_p^* \eta_n \eta_e^* \eta_\nu \bar{\psi}_p(-\vec{r},t) \psi_n(-\vec{r},t) [-C_V \bar{\psi}_e(-\vec{r},t) \gamma_\mu \psi_\nu(-\vec{r},t) + C_V' \bar{\psi}_e(-\vec{r},t) \gamma_\mu \gamma_5 \psi_\nu(-\vec{r},t)] \\
+    =& \eta_p^* \eta_n \eta_e^* \eta_\nu \bar{\psi}_p(-\vec{r},t) \psi_n(-\vec{r},t) [C_V \bar{\psi}_e(-\vec{r},t) \gamma_\mu \psi_\nu(-\vec{r},t) - C_V' \bar{\psi}_e(-\vec{r},t) \gamma_\mu \gamma_5 \psi_\nu(-\vec{r},t)]
+    \end{aligned}
+\]
+其中，场算符$\psi$的自变量从$\vec{r}$变成$-\vec{r}$的影响在全空间积分中被去除。所以如果有$\mathcal{P}\mathcal{L}_{int}\mathcal{P}^\dagger = \mathcal{L}_{int}$，则只有两种可能： \\
+1:$\eta_p^* \eta_n \eta_e^* \eta_\nu = 1$并且$C_S' = 0$; \\
+2:$\eta_p^* \eta_n \eta_e^* \eta_\nu = -1$并且$C_S = 0$; \\
+令$C = \bar{\psi}_p \sigma_{\lambda\mu} \psi_n(C_T\bar{\psi}_e \sigma_{\lambda\mu} \psi_\nu + C_T' \bar{\psi}_e \sigma_{\lambda\mu} \gamma_5 \psi_\nu)$，可以计算：
+\[
+    \mathcal{P} C \mathcal{P}^\dagger = \eta_p^* \eta_n \eta_e^* \eta_\nu \bar{\psi}_p(-\vec{r},t) \sigma_{\lambda\mu} \psi_n(-\vec{r},t) [C_T \bar{\psi}_e(-\vec{r},t) \sigma_{\lambda\mu} \psi_\nu(-\vec{r},t) - C_T' \bar{\psi}_e(-\vec{r},t) \sigma_{\lambda\mu} \gamma_5 \psi_\nu(-\vec{r},t)]
+\]
+其中，场算符$\psi$的自变量从$\vec{r}$变成$-\vec{r}$的影响在全空间积分中被去除。所以如果有$\mathcal{P}\mathcal{L}_{int}\mathcal{P}^\dagger = \mathcal{L}_{int}$，则只有两种可能： \\
+1:$\eta_p^* \eta_n \eta_e^* \eta_\nu = 1$并且$C_S' = 0$; \\
+2:$\eta_p^* \eta_n \eta_e^* \eta_\nu = -1$并且$C_S = 0$; \\
+令$D = \bar{\psi}_p \gamma_\mu \gamma_5 \psi_n(C_A \bar{\psi}_e \gamma_\mu \gamma_5 \psi_\nu + C_A' \bar{\psi}_e \gamma_\mu \psi_\nu)$，可以计算：
+\[
+    \mathcal{P} D \mathcal{P}^\dagger = \eta_p^* \eta_n \eta_e^* \eta_\nu \bar{\psi}_p(-\vec{r},t) \gamma_\mu \gamma_5 \psi_n(-\vec{r},t) [C_A \bar{\psi}_e(-\vec{r},t) \gamma_\mu \gamma_5 \psi_\nu(-\vec{r},t) - C_A' \bar{\psi}_e(-\vec{r},t) \gamma_\mu \psi_\nu(-\vec{r},t)]
+\]
+其中，场算符$\psi$的自变量从$\vec{r}$变成$-\vec{r}$的影响在全空间积分中被去除。所以如果有$\mathcal{P}\mathcal{L}_{int}\mathcal{P}^\dagger = \mathcal{L}_{int}$，则只有两种可能： \\
+1:$\eta_p^* \eta_n \eta_e^* \eta_\nu = 1$并且$C_S' = 0$; \\
+2:$\eta_p^* \eta_n \eta_e^* \eta_\nu = -1$并且$C_S = 0$; \\
+令$E = \bar{\psi}_p \gamma_5 \psi_n(C_P \bar{\psi}_e \gamma_5 \psi_\nu + C_P' \bar{\psi}_e \psi_\nu)$，可以计算：
+\[
+    \mathcal{P} E \mathcal{P}^\dagger = \eta_p^* \eta_n \eta_e^* \eta_\nu \bar{\psi}_p(-\vec{r},t) \gamma_5 \psi_n(-\vec{r},t) [C_P \bar{\psi}_e(-\vec{r},t) \gamma_5 \psi_\nu(-\vec{r},t) - C_P' \bar{\psi}_e(-\vec{r},t) \psi_\nu(-\vec{r},t)]
+\]
+其中，场算符$\psi$的自变量从$\vec{r}$变成$-\vec{r}$的影响在全空间积分中被去除。所以如果有$\mathcal{P}\mathcal{L}_{int}\mathcal{P}^\dagger = \mathcal{L}_{int}$，则只有两种可能： \\
+1:$\eta_p^* \eta_n \eta_e^* \eta_\nu = 1$并且$C_S' = 0$; \\
+2:$\eta_p^* \eta_n \eta_e^* \eta_\nu = -1$并且$C_S = 0$; \\
+综上所述，如果任意一对$(C,C')$同时非零，则不存在一组相因子使得宇称在相互作用下守恒。
+\end{sol}
+
+\end{document}
